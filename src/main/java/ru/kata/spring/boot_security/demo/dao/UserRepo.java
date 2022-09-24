@@ -1,7 +1,10 @@
 package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.data.repository.CrudRepository;
-import ru.kata.spring.boot_security.demo.model.User;
+import org.springframework.stereotype.Repository;
+import ru.kata.spring.boot_security.demo.entities.UserEntity;
 
-public interface UserRepo extends CrudRepository<User, Long> {
+@Repository
+public interface UserRepo extends CrudRepository<UserEntity, Long> {
+    UserEntity findByUsername(String username);
 }

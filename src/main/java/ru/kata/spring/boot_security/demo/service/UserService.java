@@ -3,48 +3,48 @@ package ru.kata.spring.boot_security.demo.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.UserRepo;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.entities.UserEntity;
 
 @Service
-public class UserService implements MyService<User> {
+public class UserService implements MyService<UserEntity> {
     private final UserRepo dao;
 
     public UserService(UserRepo dao) {
         this.dao = dao;
     }
 
-    @Transactional
     @Override
-    public void create(User user) {
+    @Transactional
+    public void create(UserEntity user) {
         dao.save(user);
     }
 
-    @Transactional
     @Override
-    public void delete(long id) {
+    @Transactional
+    public void delete(Long id) {
         dao.deleteById(id);
     }
 
-    @Transactional
     @Override
-    public void delete(User user) {
+    @Transactional
+    public void delete(UserEntity user) {
         dao.delete(user);
     }
 
-    @Transactional
     @Override
-    public void update(long id, User user) {
+    @Transactional
+    public void update(Long id, UserEntity user) {
         user.setId(id);
         dao.save(user);
     }
 
     @Override
-    public User show(long id) {
-        return dao.findById(id).orElse(new User());
+    public UserEntity get(Long id) {
+        return dao.findById(id).orElse(new UserEntity());
     }
 
     @Override
-    public Iterable<User> getList() {
+    public Iterable<UserEntity> getList() {
         return dao.findAll();
     }
 }

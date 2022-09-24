@@ -11,7 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @GetMapping
-    public String show(Model model) {
+    public String show1(Model model) {
+        return getView(model);
+    }
+
+    @GetMapping("/index")
+    public String show2(Model model) {
+        return getView(model);
+    }
+
+    private String getView(Model model) {
         model.addAttribute("message", "Список людей");
         model.addAttribute("url", "/users");
         return "index";

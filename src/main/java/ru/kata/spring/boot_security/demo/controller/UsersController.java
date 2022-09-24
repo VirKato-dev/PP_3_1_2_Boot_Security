@@ -1,9 +1,11 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.entities.UserEntity;
 import ru.kata.spring.boot_security.demo.service.MyService;
 
 
@@ -11,10 +13,13 @@ import ru.kata.spring.boot_security.demo.service.MyService;
 @RequestMapping("/users")
 public class UsersController {
 
-    private final MyService<User> userService;
+    private final UserDetailsService userDetailsService;
 
-    public UsersController(MyService<User> userRepo) {
+    private final MyService<UserEntity> userService;
+
+    public UsersController(MyService<UserEntity> userRepo, @Qualifier("jpa") UserDetailsService userDetailsService) {
         this.userService = userRepo;
+        this.userDetailsService = userDetailsService;
         addUsers();
     }
 
@@ -24,7 +29,7 @@ public class UsersController {
      * Подготовить объект User для сохранения в базу
      */
     @GetMapping("/new")
-    public String createForm(@ModelAttribute("user") User user) {
+    public String createForm(@ModelAttribute("user") UserEntity user) {
         return "users/new";
     }
 
@@ -32,7 +37,7 @@ public class UsersController {
      * Сохранить в базу
      */
     @PostMapping
-    public String create(@ModelAttribute("user") User user) {
+    public String create(@ModelAttribute("user") UserEntity user) {
         userService.create(user);
         return "redirect:users";
     }
@@ -52,8 +57,8 @@ public class UsersController {
      * Получить одного пользователя
      */
     @GetMapping("/{id}")
-    public String read(Model model, @PathVariable(name = "id") long id) {
-        model.addAttribute("user", userService.show(id));
+    public String read(Model model, @PathVariable(name = "id") Long id) {
+        model.addAttribute("user", userService.get(id));
         return "users/show";
     }
 
@@ -63,8 +68,8 @@ public class UsersController {
      * Подготовить изменения для объекта User
      */
     @GetMapping("/{id}/edit")
-    public String editForm(Model model, @PathVariable() long id) {
-        model.addAttribute("user", userService.show(id));
+    public String editForm(Model model, @PathVariable() Long id) {
+        model.addAttribute("user", userService.get(id));
         return "users/edit";
     }
 
@@ -72,7 +77,7 @@ public class UsersController {
      * Сохранить изменённого пользователя
      */
     @PatchMapping("/{id}")
-    public String edit(@ModelAttribute("user") User user, @PathVariable("id") long id) {
+    public String edit(@ModelAttribute("user") UserEntity user, @PathVariable("id") Long id) {
         userService.update(id, user);
         return "redirect:/users";
     }
@@ -83,7 +88,7 @@ public class UsersController {
      * Удалить пользователя (подготовки объекта User не требуется)
      */
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") long id) {
+    public String delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return "redirect:/users";
     }
@@ -94,10 +99,8 @@ public class UsersController {
      * Подготовим список пользователей в базе
      */
     private void addUsers() {
-        userService.create(new User("Степан", "Иванов"));
-        userService.create(new User("Иван", "Петров"));
-        userService.create(new User("Света", "Вихрь"));
-        userService.create(new User("Алина", "Хац"));
+//        userService.create(new UserEntity());
+//        userService.create(new UserEntity());
     }
 
 }

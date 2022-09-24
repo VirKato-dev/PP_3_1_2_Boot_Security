@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+<p><strong>Какая-то ошибка!!!</strong></p>
+<th:block th:each="item : ${#request.getParameterMap().entrySet()}">
+    <th:block th:text="${item.getKey() + ' : ' + item.getValue()}"/><br>
+</th:block>
+</body>
+</html>
