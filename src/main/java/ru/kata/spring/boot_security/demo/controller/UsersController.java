@@ -7,19 +7,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entities.UserEntity;
 import ru.kata.spring.boot_security.demo.service.MyService;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
 
 @Controller
 @RequestMapping("/users")
 public class UsersController {
 
-    private final UserDetailsService userDetailsService;
+    private final UserService userService;
 
-    private final MyService<UserEntity> userService;
-
-    public UsersController(MyService<UserEntity> userRepo, UserDetailsService userDetailsService) {
+    public UsersController(UserService userRepo) {
         this.userService = userRepo;
-        this.userDetailsService = userDetailsService;
         addUsers();
     }
 

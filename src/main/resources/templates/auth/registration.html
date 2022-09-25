@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>Регистрация пользователя</title>
 </head>
 <body>
 <h1>Регистрация</h1>
+<p th:if="${message}" th:text="${message}"></p>
 <form method="POST" th:action="@{/register}" id="registerForm">
     <label for="username">Логин: </label>
     <input type="text" name="username" id="username"/><br/>

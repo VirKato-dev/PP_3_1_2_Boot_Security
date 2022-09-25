@@ -6,8 +6,8 @@
 </head>
 <body>
 <h1>Welcome to Index PAGE!</h1>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<form th:action="@{/logout}" method="post">
+<form th:if="${#httpServletRequest.remoteUser != null}" th:action="@{/logout}" method="post">
+    <h2 th:inline="text">Hello, [[${#httpServletRequest.remoteUser}]]!</h2>
     <input type="submit" value="Sign Out"/>
 </form>
 <a th:href="${url}"><h1 th:text='${message}'></h1></a>

@@ -31,7 +31,7 @@ public class UserEntity implements UserDetails {
 //    @JoinTable (name = "users_roles",
 //            joinColumns = @JoinColumn(name = "user_id"),
 //            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany //используем роли имеющиеся в базе
     private Collection<RoleEntity> roles;
 
     public UserEntity(String username, String password, String fullname, String street, String city, String state,

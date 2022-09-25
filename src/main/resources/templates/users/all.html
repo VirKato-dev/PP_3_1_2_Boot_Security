@@ -42,7 +42,7 @@
         <tbody>
         <tr th:each="u, it : ${users}">
             <th th:text="${it.index}+1"></th>
-            <td style="width: 100%"><a th:href="@{/users/{i}(i=${u.getId()})}" th:text="${u.getName()} + ' ' + ${u.getFamily()}"/></td>
+            <td style="width: 100%"><a th:href="@{/users/{i}(i=${u.getId()})}" th:text="${u.getFullname() + ' ' + u.getPhoneNumber()}"/></td>
             <td class="no-border">
                 <form th:method="get" th:action="@{/users/{i}/edit(i=${u.getId()})}">
                     <input type="submit" value="редакт."/>

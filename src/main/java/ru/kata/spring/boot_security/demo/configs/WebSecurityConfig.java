@@ -22,6 +22,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/", "/register").permitAll()
+                        .antMatchers("/users**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -60,4 +61,5 @@ public class WebSecurityConfig {
 //                List.of(new SimpleGrantedAuthority("ROLE_USER"))));
 //        return new InMemoryUserDetailsManager(usersList);
 //    }
+
 }

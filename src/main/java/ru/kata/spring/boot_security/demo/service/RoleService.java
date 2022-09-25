@@ -52,4 +52,8 @@ public class RoleService implements MyService<RoleEntity> {
     public Iterable<RoleEntity> getList() {
         return dao.findAll();
     }
+
+    public RoleRepo getRepo() {
+        return dao;
+    }
 }

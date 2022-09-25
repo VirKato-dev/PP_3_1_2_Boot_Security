@@ -46,6 +46,9 @@ public class UserService implements MyService<UserEntity>, UserDetailsService {
         return dao.findById(id).orElse(new UserEntity());
     }
 
+    public UserEntity getByUsername(String username) {
+        return dao.findByUsername(username);
+    }
     @Override
     public Iterable<UserEntity> getList() {
         return dao.findAll();

@@ -9,10 +9,10 @@
     <fieldset style="width: fit-content">
         <legend>Данные о текущем пользователе</legend>
         <label for="n">Имя:</label>
-        <input id="n" type="text" th:field="*{name}" th:value="${user.getName()}">
+        <input id="n" type="text" th:field="*{fullname}" th:value="${user.getFullname()}">
         <br>
-        <label for="f">Фамилия:</label>
-        <input id="f" type="text" th:field="*{family}" th:value="${user.getFamily()}">
+        <label for="f">Телефон:</label>
+        <input id="f" type="text" th:field="*{phoneNumber}" th:value="${user.getPhoneNumber()}">
         <br>
         <input type="hidden" th:field="*{id}" th:value="${user.getId()}">
         <input type="submit" value="Сохранить">

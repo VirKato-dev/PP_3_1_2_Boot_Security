@@ -6,4 +6,5 @@ import ru.kata.spring.boot_security.demo.entities.RoleEntity;
 
 @Repository
 public interface RoleRepo extends CrudRepository<RoleEntity, Long> {
+    RoleEntity getRoleEntityByRole(String role);
 }
