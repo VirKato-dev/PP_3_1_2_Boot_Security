@@ -5,19 +5,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.dao.UserRepo;
-import ru.kata.spring.boot_security.demo.entities.UserEntity;
 import ru.kata.spring.boot_security.demo.model.RegistrationForm;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
 public class RegistrationController {
 
-    private final UserRepo userRepo;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public RegistrationController(UserRepo userRepo, PasswordEncoder passwordEncoder) {
-        this.userRepo = userRepo;
+    public RegistrationController(UserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -28,7 +27,7 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public String processRegistration(RegistrationForm form) {
-        userRepo.save(form.toUser(passwordEncoder));
+        userService.create(form.toUser(passwordEncoder));
         return "redirect:/login";
     }
 
@@ -40,6 +39,7 @@ public class RegistrationController {
     @PostMapping("/login")
     public String processLogin(Model model) {
         String pw = String.valueOf(model.getAttribute("password"));
+        System.out.println(pw);
         return "redirect:/";
     }
 }

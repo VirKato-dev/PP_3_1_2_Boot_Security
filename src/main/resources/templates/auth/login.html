@@ -4,21 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Авторизация</title>
+    <style>
+        .login_form {
+            text-align: end;
+            width: border-box;
+            margin: 0;
+            padding: 0
+        }
+        .center {
+            text-align: center;
+        }
+        .button {
+            margin-top: 1ex;
+            margin-bottom: 1ex;
+        }
+        .line {
+            margin-top: 0.5ex;
+            margin-bottom: 0.5ex;
+        }
+    </style>
 </head>
 <body>
-<div th:if="${param.error}">
-    Неверный логин или пароль.
-</div>
-<div th:if="${param.logout}">
-    Вы вышли из аккаунта.
-</div>
 <fieldset style="width: fit-content"><legend>Авторизация</legend>
-    <form style="align-content: center" th:action="@{/login}" method="post">
-        <label>Логин : <input style="width: 20em" type="text" name="username"/> </label> <br>
-        <label>Пароль : <input style="width: 20em" type="password" name="password"/> </label> <br>
-        <input type="submit" value="Войти"/>
+    <div th:if="${param.error}">
+        Неверный логин или пароль.
+    </div>
+    <div th:if="${param.logout}">
+        Вы вышли из аккаунта.
+    </div>
+    <form th:action="@{/login}" method="post">
+        <p class="login_form line"> <label>Логин : <input type="text" name="username"/> </label> </p>
+        <p class="login_form line"> <label>Пароль : <input type="password" name="password"/> </label> </p>
+        <p class="login_form button"> <input type="submit" value="Войти"/> </p>
     </form>
+    <p class="login_form center"> <a th:href="@{/register}">Ещё нет аккаунта</a> </p>
 </fieldset>
-<a th:href="@{/register}">Ещё нет аккаунта</a>
 </body>
 </html>

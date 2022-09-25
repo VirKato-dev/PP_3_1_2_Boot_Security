@@ -17,7 +17,7 @@ public class UsersController {
 
     private final MyService<UserEntity> userService;
 
-    public UsersController(MyService<UserEntity> userRepo, @Qualifier("jpa") UserDetailsService userDetailsService) {
+    public UsersController(MyService<UserEntity> userRepo, UserDetailsService userDetailsService) {
         this.userService = userRepo;
         this.userDetailsService = userDetailsService;
         addUsers();
