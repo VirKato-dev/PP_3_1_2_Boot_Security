@@ -49,6 +49,7 @@ public class UserService implements MyService<UserEntity>, UserDetailsService {
     public UserEntity getByUsername(String username) {
         return dao.findByUsername(username);
     }
+
     @Override
     public Iterable<UserEntity> getList() {
         return dao.findAll();
@@ -58,5 +59,6 @@ public class UserService implements MyService<UserEntity>, UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = dao.findByUsername(username);
         if (user != null) return user;
-        throw new UsernameNotFoundException("User ‘" + username + "’ not found");    }
+        throw new UsernameNotFoundException("User ‘" + username + "’ not found");
+    }
 }
