@@ -61,4 +61,5 @@ public class UserService implements MyService<UserEntity>, UserDetailsService {
         if (user != null) return user;
         throw new UsernameNotFoundException("User ‘" + username + "’ not found");
     }
+
 }

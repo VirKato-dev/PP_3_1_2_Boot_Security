@@ -22,7 +22,7 @@ public class HomeController {
 
     private String getView(Model model) {
         model.addAttribute("message", "Список людей");
-        model.addAttribute("url", "/users");
+        model.addAttribute("url", "/admin/users");
         return "index";
     }
 }

@@ -1,10 +1,9 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.RoleRepo;
 import ru.kata.spring.boot_security.demo.entities.RoleEntity;
-
-import javax.transaction.Transactional;
 
 @Service
 public class RoleService implements MyService<RoleEntity> {
@@ -56,4 +55,5 @@ public class RoleService implements MyService<RoleEntity> {
     public RoleRepo getRepo() {
         return dao;
     }
+
 }

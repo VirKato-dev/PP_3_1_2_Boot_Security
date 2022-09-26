@@ -1,7 +1,8 @@
 package ru.kata.spring.boot_security.demo.entities;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,15 +10,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor(force = true)
 @Table(name = "users")
 public class UserEntity implements UserDetails {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
@@ -27,7 +31,7 @@ public class UserEntity implements UserDetails {
     private String state;
     private String zip;
     private String phoneNumber;
-//    @ManyToMany(cascade = CascadeType.ALL)
+    //    @ManyToMany(cascade = CascadeType.ALL)
 //    @JoinTable (name = "users_roles",
 //            joinColumns = @JoinColumn(name = "user_id"),
 //            inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -83,5 +87,26 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity)) return false;
+        UserEntity that = (UserEntity) o;
+        return username.equals(that.username)
+                && password.equals(that.password)
+                && Objects.equals(fullname, that.fullname)
+                && Objects.equals(street, that.street)
+                && Objects.equals(city, that.city)
+                && Objects.equals(state, that.state)
+                && Objects.equals(zip, that.zip)
+                && Objects.equals(phoneNumber, that.phoneNumber)
+                && Objects.equals(roles, that.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, fullname, street, city, state, zip, phoneNumber, roles.hashCode());
     }
 }

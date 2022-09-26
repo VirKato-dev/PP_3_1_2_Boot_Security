@@ -24,7 +24,7 @@ public class RegistrationController {
         this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
-        createRoles();
+        prepareUsers();
     }
 
     @GetMapping("/register")
@@ -54,15 +54,30 @@ public class RegistrationController {
         return "redirect:/";
     }
 
-    private void createRoles() {
+    public void prepareUsers() {
+        // роли
         if (roleService.getRepo().count() < 2) {
             roleService.getRepo().saveAll(Set.of(
                     new RoleEntity("ROLE_USER"),
                     new RoleEntity("ROLE_ADMIN")));
+        }
+
+        // админ
+        if (userService.getByUsername("admin") == null) {
             userService.create(new UserEntity("admin", passwordEncoder.encode("admin"),
                     "ADMIN", "", "", "", "", "", Set.of(
                     roleService.getRepo().getRoleEntityByRole("ROLE_ADMIN"),
                     roleService.getRepo().getRoleEntityByRole("ROLE_USER"))));
         }
+
+        // тестовый пользователь
+//        if (userService.getByUsername("user") == null) {
+//            userService.create(new UserEntity("user", passwordEncoder.encode("user"),
+//                    "Test User", "street", "city", "state",
+//                    "663600", "+79008007060", Set.of(
+//                    roleService.getRepo().getRoleEntityByRole("ROLE_USER"))));
+//        }
     }
+
+
 }

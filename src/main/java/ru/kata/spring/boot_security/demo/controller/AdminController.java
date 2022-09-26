@@ -1,24 +1,26 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entities.UserEntity;
-import ru.kata.spring.boot_security.demo.service.MyService;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 
 @Controller
-@RequestMapping("/users")
-public class UsersController {
+@RequestMapping("/admin/users")
+public class AdminController {
 
     private final UserService userService;
+    private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsersController(UserService userRepo) {
+    public AdminController(UserService userRepo, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userRepo;
-        addUsers();
+        this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     //--- CREATE
@@ -37,7 +39,7 @@ public class UsersController {
     @PostMapping
     public String create(@ModelAttribute("user") UserEntity user) {
         userService.create(user);
-        return "redirect:users";
+        return "redirect:/admin/users";
     }
 
     //--- READ
@@ -77,7 +79,7 @@ public class UsersController {
     @PatchMapping("/{id}")
     public String edit(@ModelAttribute("user") UserEntity user, @PathVariable("id") Long id) {
         userService.update(id, user);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
     //--- DELETE
@@ -89,16 +91,6 @@ public class UsersController {
     public String delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return "redirect:/users";
-    }
-
-    //--- TECHNICAL
-
-    /***
-     * Подготовим список пользователей в базе
-     */
-    private void addUsers() {
-//        userService.create(new UserEntity());
-//        userService.create(new UserEntity());
     }
 
 }
